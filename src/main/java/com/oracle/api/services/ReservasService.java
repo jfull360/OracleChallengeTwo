@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.oracle.api.entities.Reservas;
-import com.oracle.api.repositories.HuespedesRepository;
 import com.oracle.api.repositories.ReservasRepository;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import com.oracle.api.repositories.LoginRepository;
 /**
  *
  * @author JORGE DOMINGUEZ
@@ -32,8 +32,7 @@ public class ReservasService{
         this.repository = r;
     }
             
-    public Reservas ReservasGuardar(Reservas h){ 
-      System.out.println("LLEGO AL ULTIMO GUARDADO");
+    public Reservas ReservasGuardar(Reservas h){
       return repository.save(h);
     }
     

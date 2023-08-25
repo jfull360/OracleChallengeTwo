@@ -4,20 +4,23 @@
  */
 package com.oracle.api.frames;
 
+import com.oracle.api.services.HuespedesService;
 import com.oracle.api.services.ReservasService;
-import java.awt.Frame;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author JORGE DOMINGUEZ
  */
+@Controller
 public class FrameOptions extends javax.swing.JFrame {
 
     private final ReservasService reservas;
+    private final HuespedesService huespedes;
     
     @Autowired
-    public FrameOptions(ReservasService r) {
+    public FrameOptions(ReservasService r, HuespedesService h) {
         initComponents();
         setLocationRelativeTo(null);
         utils convert = new utils();
@@ -27,6 +30,7 @@ public class FrameOptions extends javax.swing.JFrame {
         convert.SetImage(jLabel1, "src/main/java/images/Ha-100px.png");
         this.repaint();
         this.reservas = r;
+        this.huespedes = h;
     }
 
     private String user = "";
@@ -206,8 +210,7 @@ public class FrameOptions extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // reservas actions
-        System.out.println("reservas"+ reservas);
-        FrameReserva framer = new FrameReserva(reservas);//create instance od frameInput
+        FrameReserva framer = new FrameReserva(reservas, huespedes);//create instance of frameInput
         framer.setVisible(true); //open frameInput
         setVisible(false); // close frame
     }//GEN-LAST:event_jLabel4MouseClicked

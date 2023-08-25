@@ -5,21 +5,23 @@
 package com.oracle.api.entities;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 
 @Entity
 @Table(name = "huespedes")
+@Data
 public class Huespedes implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -27,7 +29,7 @@ public class Huespedes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idhuespedes")
-    private Long idhuespedes;
+    private Integer idhuespedes;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellido")
@@ -38,78 +40,8 @@ public class Huespedes implements Serializable {
     private String nacionalidad;
     @Column(name = "telefono")
     private String telefono;
-    @JoinColumn(name = "idReserva", referencedColumnName = "id")
-    private Reservas idReserva;
+    //@JoinColumn(name = "id_reserva", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Reservas> idReserva;
 
-    public Huespedes(){}
-    
-    public Huespedes(Long idhuespedes, String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono, Reservas idReserva) {
-        this.idhuespedes = idhuespedes;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.nacionalidad = nacionalidad;
-        this.telefono = telefono;
-        this.idReserva = idReserva;
-    }
-
-    
-    public Long getIdhuespedes() {
-        return idhuespedes;
-    }
-
-    public void setIdhuespedes(Long idhuespedes) {
-        this.idhuespedes = idhuespedes;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Reservas getIdReserva() {
-        return idReserva;
-    }
-
-    public void setIdReserva(Reservas idReserva) {
-        this.idReserva = idReserva;
-    }
-    
-    
-    
 }

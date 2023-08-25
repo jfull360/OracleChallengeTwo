@@ -4,21 +4,26 @@
  */
 package com.oracle.api.frames;
 
+import com.oracle.api.entities.Reservas;
+import com.oracle.api.services.HuespedesService;
 import com.oracle.api.services.ReservasService;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author JORGE DOMINGUEZ
  */
+@Controller
 public class FrameReserva extends javax.swing.JFrame {
 
-private final ReservasService reservas;
-    
+    private final ReservasService reservas;
+    private final HuespedesService huespedes;
+
     @Autowired
-    public FrameReserva(ReservasService r) {
+    public FrameReserva(ReservasService r, HuespedesService h) {
         initComponents();
         setLocationRelativeTo(null);
         utils convert = new utils();
@@ -28,7 +33,7 @@ private final ReservasService reservas;
         jDateChooser1.setDateFormatString("dd-MM-yyyy");
         jDateChooser2.setDateFormatString("dd-MM-yyyy");
         this.reservas = r;
-      
+        this.huespedes = h;
     }
 
     /**
@@ -202,26 +207,39 @@ private final ReservasService reservas;
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         //continuar button acción
         utils utils = new utils();
-        if(reservaText() || jTextField1.getText().isEmpty() || !utils.isNumeric(jTextField1.getText().toString())){
+        if (reservaText() || jTextField1.getText().isEmpty() || !utils.isNumeric(jTextField1.getText().toString())) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un valor valido.");
             return;
         }
-        if(jDateChooser2.isValid()){
+        if (jDateChooser2.isValid()) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar una fecha check in valida.");
             return;
         }
-         if(jDateChooser1.isValid()){
+        if (jDateChooser1.isValid()) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar una fecha check out valida.");
             return;
         }
-         
-        FrameRegistro FrameRegistro = new FrameRegistro(reservas);
-        FrameRegistro.setCheckIn(jDateChooser2.getDate());
+
+        /*FrameRegistro.setCheckIn(jDateChooser2.getDate());
         FrameRegistro.setCheckOut(jDateChooser1.getDate());
-        FrameRegistro.setValorReserva(Double.parseDouble((jTextField1.getText())));
-        FrameRegistro.setFormaPago(jComboBox1.getSelectedIndex());
-        FrameRegistro.setVisible(true); //open frameInput
-        setVisible(false);
+        FrameRegistro.setFormaPago(jComboBox1.getSelectedIndex());*/
+        //Se guarda en la base de datos toda la información de la reserva
+        Reservas objeto = new Reservas();
+        objeto.setFechaEntrada(jDateChooser2.getDate().toString());
+        objeto.setFechaSalida(jDateChooser1.getDate().toString());
+        objeto.setValor(jTextField1.getText());
+        objeto.setFormaPago(jComboBox1.getSelectedItem().toString());
+        //Reservas r = reservas.ReservasGuardar(objeto);
+
+        //if (r.getId() != null) {
+            JOptionPane.showMessageDialog(this, "Reservación guardada con éxito.");
+            FrameRegistro FrameRegistro = new FrameRegistro(huespedes);
+            FrameRegistro.setReservaObjeto(objeto);
+            FrameRegistro.setVisible(true); //open frameInput
+            setVisible(false);
+        //}else{
+          //  JOptionPane.showMessageDialog(this, "Lo sentimos, ocurrio un error inesperado y no se guardo con éxito la reservación.");
+        //}
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jTextField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MousePressed
@@ -231,10 +249,10 @@ private final ReservasService reservas;
         }
     }//GEN-LAST:event_jTextField1MousePressed
 
-     private boolean reservaText() {//method to validate if textField has placeHolder (init text)
+    private boolean reservaText() {//method to validate if textField has placeHolder (init text)
         return jTextField1.getText().compareTo("Ingrese un valor de la reserva") == 0;
     }
-    
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
 
     }//GEN-LAST:event_jTextField1ActionPerformed
