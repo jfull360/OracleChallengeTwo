@@ -86,7 +86,7 @@ public class FrameReserva extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Valor de la reserva");
+        jLabel8.setText("Valor de la reserva (Tasa de interes 5%)");
 
         jPanel2.setBackground(new java.awt.Color(0, 134, 190));
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -116,6 +116,7 @@ public class FrameReserva extends javax.swing.JFrame {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(204, 204, 204));
         jTextField1.setText("Ingrese un valor de la reserva");
@@ -229,17 +230,16 @@ public class FrameReserva extends javax.swing.JFrame {
         objeto.setFechaSalida(jDateChooser1.getDate().toString());
         objeto.setValor(jTextField1.getText());
         objeto.setFormaPago(jComboBox1.getSelectedItem().toString());
-        //Reservas r = reservas.ReservasGuardar(objeto);
-
-        //if (r.getId() != null) {
+        try {
+            Reservas r = reservas.ReservasGuardar(objeto);
             JOptionPane.showMessageDialog(this, "Reservación guardada con éxito.");
             FrameRegistro FrameRegistro = new FrameRegistro(huespedes);
-            FrameRegistro.setReservaObjeto(objeto);
+            FrameRegistro.setReservaObjeto(r);
             FrameRegistro.setVisible(true); //open frameInput
             setVisible(false);
-        //}else{
-          //  JOptionPane.showMessageDialog(this, "Lo sentimos, ocurrio un error inesperado y no se guardo con éxito la reservación.");
-        //}
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lo sentimos, ocurrio un error inesperado y no se guardo con éxito la reservación.");
+        }
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jTextField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MousePressed

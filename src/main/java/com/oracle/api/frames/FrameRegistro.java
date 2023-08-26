@@ -318,25 +318,22 @@ public class FrameRegistro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un numero de reserva valido.");
             return;
         }
-        
+
         //Fin de validaciones
         //guardado en BD de objeto huespedes
         Huespedes objetoHuespedes = new Huespedes();
-        
-        List<Reservas> a = new ArrayList<>();
-        a.add(getReservaObjeto());
-        
+
         objetoHuespedes.setFechaNacimiento(jDateChooser1.getDate().toString());
         objetoHuespedes.setNombre(jTextField2.getText());
         objetoHuespedes.setApellido(jTextField4.getText());
         objetoHuespedes.setTelefono(jTextField5.getText());
         objetoHuespedes.setNacionalidad(jComboBox1.getSelectedItem().toString());
-        objetoHuespedes.setIdReserva(a);
-
-        Huespedes h = huespedes.HuespedesGuardar(objetoHuespedes);
-         if (h.getIdhuespedes()!= null) {
+        objetoHuespedes.setIdReserva(getReservaObjeto());
+        try {
+            Huespedes h = huespedes.HuespedesGuardar(objetoHuespedes);
             JOptionPane.showMessageDialog(this, "Huesped guardado con éxito.");
-        }else{
+            
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lo sentimos, ocurrio un error inesperado y no se guardo con éxito al huesped.");
         }
     }//GEN-LAST:event_jPanel2MouseClicked
