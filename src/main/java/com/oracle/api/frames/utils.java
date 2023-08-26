@@ -3,7 +3,9 @@ package com.oracle.api.frames;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,7 +13,8 @@ import javax.swing.JLabel;
  */
 public class utils {
 
-    utils() {}
+    utils() {
+    }
 
     protected void SetImage(JLabel labelName, String image) {
         ImageIcon imageicon = new ImageIcon(image);
@@ -28,6 +31,14 @@ public class utils {
             resultado = false;
         }
         return resultado;
+    }
+
+    protected static void exit() {
+        JFrame f = new JFrame("EXIT");
+        if (JOptionPane.showConfirmDialog(f, "¿Esta seguro que desea salir?",
+                "EXIT", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            System.exit(0);
+        }
     }
 
 }
