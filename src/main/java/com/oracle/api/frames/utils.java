@@ -32,6 +32,11 @@ public class utils {
         }
         return resultado;
     }
+    
+     public static boolean containsNumber(String cadena) {
+        return cadena.matches(".*[0-9].*") || cadena.matches(".*[0-9]")
+                || cadena.matches("[0-9].*") || cadena.matches("[0-9]");
+    }
 
     protected static void exit() {
         JFrame f = new JFrame("EXIT");

@@ -279,16 +279,17 @@ public class FrameReserva extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor de ingresar una fecha check out valida.");
             return;
         }
-        //Se guarda en la base de datos toda la información de la reserva
+        //Create an instance of reserva and set arguments
         Reservas objeto = new Reservas();
         objeto.setFechaEntrada(jDateChooser2.getDate().toString());
         objeto.setFechaSalida(jDateChooser1.getDate().toString());
         objeto.setValor(valor);
         objeto.setFormaPago(jComboBox1.getSelectedItem().toString());
         try {
+            //Se guarda en la base de datos toda la información de la reserva
             Reservas r = reservas.ReservasGuardar(objeto);
             JOptionPane.showMessageDialog(this, "Reservación guardada con éxito.");
-            FrameRegistro FrameRegistro = new FrameRegistro(huespedes);
+            FrameRegistro FrameRegistro = new FrameRegistro(huespedes,reservas);
             FrameRegistro.setReservaObjeto(r);
             FrameRegistro.setVisible(true); //open frameInput
             setVisible(false);

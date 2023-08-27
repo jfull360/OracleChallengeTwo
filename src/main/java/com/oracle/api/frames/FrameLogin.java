@@ -277,8 +277,6 @@ public class FrameLogin extends javax.swing.JFrame {
         FrameOptions FrameOptions = new FrameOptions(reservas, huespedes);//create instance od frameInput
         FrameOptions.setVisible(true); //open frameInput
         setVisible(false);
-        FrameOptions.setUser(jTextField1.getText().toString());// pass user using Encapsulation
-        FrameOptions.setPassword(jTextField2.getText().toString());// pass user using Encapsulation
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jTextField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MousePressed

@@ -11,6 +11,8 @@ import com.oracle.api.services.HuespedesService;
 import com.oracle.api.services.ReservasService;
 
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,21 +30,31 @@ import org.springframework.stereotype.Controller;
 public class FrameRegistro extends javax.swing.JFrame {
 
     private final HuespedesService huespedes;
+    private final ReservasService reservas;
+    private Reservas reservaObjeto;
+    utils utils = new utils();
 
     @Autowired
-    public FrameRegistro(HuespedesService h) {
+    public FrameRegistro(HuespedesService h, ReservasService r) {
         initComponents();
         setLocationRelativeTo(null);
-        utils convert = new utils();
-        convert.SetImage(jLabel14, "src/main/java/images/cerrar-sesion 32-px.png");
-        convert.SetImage(jLabel5, "src/main/java/images/registro.png");
-        convert.SetImage(jLabel1, "src/main/java/images/Ha-100px.png");
+        utils.SetImage(jLabel14, "src/main/java/images/cerrar-sesion 32-px.png");
+        utils.SetImage(jLabel5, "src/main/java/images/registro.png");
+        utils.SetImage(jLabel1, "src/main/java/images/Ha-100px.png");
         this.repaint();
         jDateChooser1.setDateFormatString("dd-MM-yyyy");
         this.huespedes = h;
+        this.reservas = r;
+        addWindowListener(new WindowAdapter() { //method that running after event "windowOpened" to get
+            @Override //Reserva Object and not null
+            public void windowOpened(WindowEvent e) {
+                try {
+                    jTextField3.setText(Long.toString(getReservaObjeto().getId()));
+                } catch (Exception ex) {
+                }
+            }
+        });
     }
-
-    private Reservas reservaObjeto;
 
     public Reservas getReservaObjeto() {
         return reservaObjeto;
@@ -153,9 +165,9 @@ public class FrameRegistro extends javax.swing.JFrame {
             }
         });
 
+        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField3.setText("Ingrese un numero de reserva");
+        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jTextField3.setBorder(null);
         jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -234,7 +246,7 @@ public class FrameRegistro extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -331,7 +343,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -340,16 +352,15 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         //guardar button acción
-        utils utils = new utils();
         if (jDateChooser1.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar una fecha de nacimiento valida.");
             return;
         }
-        if (nombreText() || jTextField2.getText().isEmpty()) {
+        if (nombreText() || jTextField2.getText().isEmpty() || utils.containsNumber(jTextField2.getText())) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un Nombre valido.");
             return;
         }
-        if (apellidoText() || jTextField4.getText().isEmpty()) {
+        if (apellidoText() || jTextField4.getText().isEmpty() || utils.containsNumber(jTextField4.getText())) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un apellido valido.");
             return;
         }
@@ -363,9 +374,8 @@ public class FrameRegistro extends javax.swing.JFrame {
         }
 
         //Fin de validaciones
-        //guardado en BD de objeto huespedes
+        //CReate instance of Huespedes Object
         Huespedes objetoHuespedes = new Huespedes();
-
         objetoHuespedes.setFechaNacimiento(jDateChooser1.getDate().toString());
         objetoHuespedes.setNombre(jTextField2.getText());
         objetoHuespedes.setApellido(jTextField4.getText());
@@ -373,9 +383,12 @@ public class FrameRegistro extends javax.swing.JFrame {
         objetoHuespedes.setNacionalidad(jComboBox1.getSelectedItem().toString());
         objetoHuespedes.setIdReserva(getReservaObjeto());
         try {
+            //guardado en BD de objeto huespedes
             Huespedes h = huespedes.HuespedesGuardar(objetoHuespedes);
             JOptionPane.showMessageDialog(this, "Huesped guardado con éxito.");
-
+            FrameOptions FrameOptions = new FrameOptions(reservas, huespedes);//create instance od frameInput
+            FrameOptions.setVisible(true); //open frameInput
+            setVisible(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lo sentimos, ocurrio un error inesperado y no se guardo con éxito al huesped.");
         }
@@ -458,8 +471,6 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -469,8 +480,6 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;

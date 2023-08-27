@@ -36,25 +36,6 @@ public class FrameOptions extends javax.swing.JFrame {
         this.reservas = r;
         this.huespedes = h;
     }
-    
-    private String user = "";
-    private String password = "";
-    
-    public String getUser() {
-        return user;
-    }
-    
-    public void setUser(String user) {
-        this.user = user;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -262,6 +243,9 @@ public class FrameOptions extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // busqueda
+        FrameBusqueda b = new FrameBusqueda();
+        b.setVisible(true); //open frameInput
+        setVisible(false); // close frame
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -270,7 +254,7 @@ public class FrameOptions extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jPanel4MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
