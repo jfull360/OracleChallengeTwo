@@ -243,7 +243,7 @@ public class FrameOptions extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // busqueda
-        FrameBusqueda b = new FrameBusqueda();
+        FrameBusqueda b = new FrameBusqueda(reservas,huespedes);
         b.setVisible(true); //open frameInput
         setVisible(false); // close frame
     }//GEN-LAST:event_jLabel6MouseClicked
