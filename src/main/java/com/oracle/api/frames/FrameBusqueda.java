@@ -42,26 +42,16 @@ public class FrameBusqueda extends javax.swing.JFrame {
         this.reservas = r;
         this.huespedes = h;
         ListSelectionModel cellSelectionModel = jTable1.getSelectionModel();
-        //cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 listIDSelected.clear();
                 int[] selectedRow = jTable1.getSelectedRows();
                 int[] selectedColumns = jTable1.getSelectedColumns();
                 for (int i = 0; i < selectedRow.length; i++) {
-                    for (int j = 0; j < selectedColumns.length; j++) {
-                        
                         try{
-                          listIDSelected.add(Long.parseLong(jTable1.getValueAt(selectedRow[i], selectedColumns[j]).toString()));
-                          
-                        }catch(Exception ii){
-                            
-                        }
-                        //selectedData = (String) jTable1.getValueAt(selectedRow[i], selectedColumns[j]);
-                    }
-                }
-                for (int i = 0; i < listIDSelected.size(); i++) {
-                System.out.println("Selected: " + listIDSelected.get(i));
+                          listIDSelected.add(Long.parseLong(jTable1.getValueAt(selectedRow[i], 0).toString()));             
+                        }catch(Exception ii){}
                 }
             }
 
@@ -580,21 +570,21 @@ public class FrameBusqueda extends javax.swing.JFrame {
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
 // delete button
         String mensaje = "";
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
+        for (int i = 0; i < listIDSelected.size(); i++) {
             if (jTable1.isRowSelected(i)) {
-                //try {
+                try {
                 if (typeSearch) {
-                    huespedes.deleteHuesped(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
+                    huespedes.deleteHuesped(Long.parseLong(listIDSelected.get(i).toString()));
                     mensaje = "Huesped eliminado exitosamente.";
                     searchHuesped();
                 } else {
-                    reservas.deleteReserva(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
+                    reservas.deleteReserva(Long.parseLong(listIDSelected.get(i).toString()));
                     mensaje = "Reserva eliminada exitosamente.";
                     searchReserva();
                 }
-                /*} catch (Exception e) {
+                } catch (Exception e) {
                     mensaje = "Lo sentimos pero pudo haber ocurrido un error y posiblemente NO SE ELIMINARON todos los registros seleccionados.";
-                }*/
+                }
             }
         }
         JOptionPane.showMessageDialog(this, mensaje);
