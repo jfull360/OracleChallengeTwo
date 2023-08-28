@@ -4,22 +4,16 @@
  */
 package com.oracle.api.frames;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.oracle.api.entities.Huespedes;
 import com.oracle.api.entities.Reservas;
 import com.oracle.api.services.HuespedesService;
 import com.oracle.api.services.ReservasService;
-
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -43,6 +37,8 @@ public class FrameRegistro extends javax.swing.JFrame {
         utils.SetImage(jLabel1, "src/main/java/images/Ha-100px.png");
         this.repaint();
         jDateChooser1.setDateFormatString("dd-MM-yyyy");
+        JTextFieldDateEditor editor1 = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
+        editor1.setEditable(false);
         this.huespedes = h;
         this.reservas = r;
         addWindowListener(new WindowAdapter() { //method that running after event "windowOpened" to get
