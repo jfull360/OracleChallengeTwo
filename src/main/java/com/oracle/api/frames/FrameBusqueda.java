@@ -7,6 +7,7 @@ package com.oracle.api.frames;
 import com.oracle.api.entities.Huespedes;
 import com.oracle.api.entities.Reservas;
 import com.oracle.api.services.HuespedesService;
+import com.oracle.api.services.LoginService;
 import com.oracle.api.services.ReservasService;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ public class FrameBusqueda extends javax.swing.JFrame {
 
     private final ReservasService reservas;
     private final HuespedesService huespedes;
+    private final LoginService lService;
 
     utils convert = new utils();
     private boolean typeSearch = true;
     List<Long> listIDSelected = new ArrayList<>();
 
-    public FrameBusqueda(ReservasService r, HuespedesService h) {
+    public FrameBusqueda(ReservasService r, HuespedesService h, LoginService l) {
         initComponents();
         setLocationRelativeTo(null);
         convert.SetImage(jLabel1, "src/main/java/images/aH-150px.png");
@@ -41,6 +43,7 @@ public class FrameBusqueda extends javax.swing.JFrame {
         convert.SetImage(jLabel20, "src/main/java/images/deletar.png");
         this.reservas = r;
         this.huespedes = h;
+        this.lService = l;
         ListSelectionModel cellSelectionModel = jTable1.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
@@ -49,9 +52,10 @@ public class FrameBusqueda extends javax.swing.JFrame {
                 int[] selectedRow = jTable1.getSelectedRows();
                 int[] selectedColumns = jTable1.getSelectedColumns();
                 for (int i = 0; i < selectedRow.length; i++) {
-                        try{
-                          listIDSelected.add(Long.parseLong(jTable1.getValueAt(selectedRow[i], 0).toString()));             
-                        }catch(Exception ii){}
+                    try {
+                        listIDSelected.add(Long.parseLong(jTable1.getValueAt(selectedRow[i], 0).toString()));
+                    } catch (Exception ii) {
+                    }
                 }
             }
 
@@ -414,7 +418,6 @@ public class FrameBusqueda extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(3).setHeaderValue("Telefono");
         jTable1.getColumnModel().getColumn(4).setHeaderValue("Nacionalidad");
         jTable1.getColumnModel().getColumn(5).setHeaderValue("Fecha Nacimiento");
-
         jTable1.getTableHeader().resizeAndRepaint();
     }
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
@@ -423,7 +426,9 @@ public class FrameBusqueda extends javax.swing.JFrame {
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         //CLOSE
-        utils.exit();
+        FrameOptions f = new FrameOptions(reservas, huespedes, lService);
+        f.setVisible(true); //open frameInput
+        setVisible(false);
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
@@ -573,15 +578,15 @@ public class FrameBusqueda extends javax.swing.JFrame {
         for (int i = 0; i < listIDSelected.size(); i++) {
             if (jTable1.isRowSelected(i)) {
                 try {
-                if (typeSearch) {
-                    huespedes.deleteHuesped(Long.parseLong(listIDSelected.get(i).toString()));
-                    mensaje = "Huesped eliminado exitosamente.";
-                    searchHuesped();
-                } else {
-                    reservas.deleteReserva(Long.parseLong(listIDSelected.get(i).toString()));
-                    mensaje = "Reserva eliminada exitosamente.";
-                    searchReserva();
-                }
+                    if (typeSearch) {
+                        huespedes.deleteHuesped(Long.parseLong(listIDSelected.get(i).toString()));
+                        mensaje = "Huesped eliminado exitosamente.";
+                        searchHuesped();
+                    } else {
+                        reservas.deleteReserva(Long.parseLong(listIDSelected.get(i).toString()));
+                        mensaje = "Reserva eliminada exitosamente.";
+                        searchReserva();
+                    }
                 } catch (Exception e) {
                     mensaje = "Lo sentimos pero pudo haber ocurrido un error y posiblemente NO SE ELIMINARON todos los registros seleccionados.";
                 }

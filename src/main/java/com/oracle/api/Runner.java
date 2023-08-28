@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.oracle.api;
 
-import com.oracle.api.frames.FrameLogin;
+import com.oracle.api.frames.FrameStart;
 import java.awt.EventQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Runner implements  CommandLineRunner{
     
-    private final FrameLogin frameL;
+    private final FrameStart frameL;
     
     @Autowired
-    public Runner (FrameLogin f){
+    public Runner (FrameStart f){
         this.frameL=f;
     }
 

@@ -25,12 +25,13 @@ public class FrameLogin extends javax.swing.JFrame {
     private final LoginService lService;
     private final HuespedesService huespedes;
 
+    utils convert = new utils();
+    
     @Autowired
     public FrameLogin(ReservasService r, LoginService l, HuespedesService h) {
         super();
         initComponents();
         setLocationRelativeTo(null);
-        utils convert = new utils();
         convert.SetImage(jLabel6, "src/main/java/images/hotel.png");
         convert.SetImage(jLabel7, "src/main/java/images/Ha-100px.png");
         this.reservas = r;
@@ -274,7 +275,7 @@ public class FrameLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lo sentimos, Usuario no encontrado.");
             return;
         }
-        FrameOptions FrameOptions = new FrameOptions(reservas, huespedes);//create instance od frameInput
+        FrameOptions FrameOptions = new FrameOptions(reservas, huespedes,lService);//create instance od frameInput
         FrameOptions.setVisible(true); //open frameInput
         setVisible(false);
     }//GEN-LAST:event_jPanel2MouseClicked
@@ -288,8 +289,8 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         //boton´s code of back action
-        // FrameReserva frame = new FrameReserva();//create instance od frameInput
-        //frame.setVisible(true); //open frameInput
+       FrameStart frame = new FrameStart(reservas,lService,huespedes);//create instance od frameInput
+       frame.setVisible(true); //open frameInput
         setVisible(false);
     }//GEN-LAST:event_jPanel3MouseClicked
 
