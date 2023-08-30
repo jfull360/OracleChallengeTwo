@@ -13,6 +13,11 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +31,7 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private final HuespedesService huespedes;
     private final ReservasService reservas;
-     private final LoginService lService;
+    private final LoginService lService;
     private Reservas reservaObjeto;
     utils utils = new utils();
 
@@ -37,6 +42,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         utils.SetImage(jLabel14, "src/main/java/images/cerrar-sesion 32-px.png");
         utils.SetImage(jLabel5, "src/main/java/images/registro.png");
         utils.SetImage(jLabel1, "src/main/java/images/Ha-100px.png");
+        utils.SetImage(jLabel12, "src/main/java/images/disquete.png");
         this.repaint();
         jDateChooser1.setDateFormatString("dd-MM-yyyy");
         JTextFieldDateEditor editor1 = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
@@ -77,6 +83,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
@@ -130,20 +137,26 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Guardar");
 
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -248,15 +261,13 @@ public class FrameRegistro extends javax.swing.JFrame {
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34))
@@ -354,6 +365,12 @@ public class FrameRegistro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor de ingresar una fecha de nacimiento valida.");
             return;
         }
+        LocalDateTime nacimiento = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        Period p = Period.between(nacimiento.toLocalDate(), LocalDate.now());
+        if (p.getYears() < 18) {
+            JOptionPane.showMessageDialog(this, "Para ser registrado debe tener la edad minima de 18 años.");
+            return;
+        }
         if (nombreText() || jTextField2.getText().isEmpty() || utils.containsNumber(jTextField2.getText())) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un Nombre valido.");
             return;
@@ -366,6 +383,10 @@ public class FrameRegistro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un telefono valido.");
             return;
         }
+        if(jTextField5.getText().length() < 6){
+            JOptionPane.showMessageDialog(this, "Favor de ingresar un telefono con al menos 6 digitos.");
+            return;
+        }
         if (reservaText() || jTextField3.getText().isEmpty() || !utils.isNumeric(jTextField3.getText())) {
             JOptionPane.showMessageDialog(this, "Favor de ingresar un numero de reserva valido.");
             return;
@@ -374,7 +395,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         //Fin de validaciones
         //CReate instance of Huespedes Object
         Huespedes objetoHuespedes = new Huespedes();
-        objetoHuespedes.setFechaNacimiento(jDateChooser1.getDate().toString());
+        objetoHuespedes.setFechaNacimiento(new SimpleDateFormat("dd-MM-yyyy").format(jDateChooser1.getDate()));
         objetoHuespedes.setNombre(jTextField2.getText());
         objetoHuespedes.setApellido(jTextField4.getText());
         objetoHuespedes.setTelefono(jTextField5.getText());
@@ -454,9 +475,9 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         //CLOSE
-        FrameOptions FrameOptions = new FrameOptions(reservas, huespedes,lService);//create instance od frameInput
+        FrameOptions FrameOptions = new FrameOptions(reservas, huespedes, lService);//create instance od frameInput
         FrameOptions.setVisible(true); //open frameInput
-        setVisible(false);  
+        setVisible(false);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
@@ -471,6 +492,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
