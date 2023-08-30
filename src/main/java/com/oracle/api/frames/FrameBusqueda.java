@@ -40,7 +40,7 @@ public class FrameBusqueda extends javax.swing.JFrame {
         convert.SetImage(jLabel18, "src/main/java/images/lupa2.png");
         convert.SetImage(jLabel16, "src/main/java/images/cerrar-sesion 32-px.png");
         convert.SetImage(jLabel17, "src/main/java/images/editar-texto.png");
-        convert.SetImage(jLabel20, "src/main/java/images/deletar.png");
+        convert.SetImage(jLabel21, "src/main/java/images/deletar.png");
         this.reservas = r;
         this.huespedes = h;
         this.lService = l;
@@ -85,9 +85,10 @@ public class FrameBusqueda extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -312,14 +313,6 @@ public class FrameBusqueda extends javax.swing.JFrame {
 
         jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 120, 30));
 
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 40, 34));
-
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
         jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -328,10 +321,10 @@ public class FrameBusqueda extends javax.swing.JFrame {
             }
         });
 
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
+                jLabel18MouseClicked(evt);
             }
         });
 
@@ -339,14 +332,44 @@ public class FrameBusqueda extends javax.swing.JFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 40, -1));
+        jPanel1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 56, 40, 40));
+
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel13MouseClicked(evt);
+            }
+        });
+
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 40, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -396,13 +419,7 @@ public class FrameBusqueda extends javax.swing.JFrame {
         jTable1.setVisible(false);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);//clean data of old results
-        jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
-        jTable1.getColumnModel().getColumn(1).setHeaderValue("Valor");
-        jTable1.getColumnModel().getColumn(2).setHeaderValue("Fecha Entrada");
-        jTable1.getColumnModel().getColumn(3).setHeaderValue("Fecha Salida");
-        jTable1.getColumnModel().getColumn(4).setHeaderValue("Forma Pago");
-        jTable1.getColumnModel().getColumn(5).setHeaderValue("");
-        jTable1.getTableHeader().resizeAndRepaint();
+        repaintTableReservas();
     }
 
     private void searchHuesped() {
@@ -412,13 +429,7 @@ public class FrameBusqueda extends javax.swing.JFrame {
         jTable1.setVisible(false);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);//clean data of old results
-        jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
-        jTable1.getColumnModel().getColumn(1).setHeaderValue("Nombre");
-        jTable1.getColumnModel().getColumn(2).setHeaderValue("Apellido");
-        jTable1.getColumnModel().getColumn(3).setHeaderValue("Telefono");
-        jTable1.getColumnModel().getColumn(4).setHeaderValue("Nacionalidad");
-        jTable1.getColumnModel().getColumn(5).setHeaderValue("Fecha Nacimiento");
-        jTable1.getTableHeader().resizeAndRepaint();
+        repaintTableHuespedes();
     }
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
@@ -442,19 +453,18 @@ public class FrameBusqueda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor de primero hacer una busqueda.");
             return;
         }
+        stopCellEditing();
         if (typeSearch) {//user choose update "Huespedes"
             List<Huespedes> h = new ArrayList();
             for (int i = 0; i < jTable1.getRowCount(); i++) {
-                Huespedes huespedesObject = new Huespedes();
-                huespedesObject.setIdhuespedes(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
-                huespedesObject.setNombre(jTable1.getValueAt(i, 1).toString());
-                huespedesObject.setApellido(jTable1.getValueAt(i, 2).toString());
-                huespedesObject.setTelefono(jTable1.getValueAt(i, 3).toString());
-                huespedesObject.setNacionalidad(jTable1.getValueAt(i, 4).toString());
-                huespedesObject.setFechaNacimiento(jTable1.getValueAt(i, 5).toString());
-                Optional<Huespedes> hAUX = huespedes.getReserva(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
-                huespedesObject.setIdReserva(hAUX.get().getIdReserva());
-                h.add(huespedesObject);
+                Optional<Huespedes> huespedesObject = huespedes.searchHuespedesByID(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
+                huespedesObject.get().setIdhuespedes(Long.parseLong(jTable1.getValueAt(i, 0).toString()));
+                huespedesObject.get().setNombre(jTable1.getValueAt(i, 1).toString());
+                huespedesObject.get().setApellido(jTable1.getValueAt(i, 2).toString());
+                huespedesObject.get().setTelefono(jTable1.getValueAt(i, 3).toString());
+                huespedesObject.get().setNacionalidad(jTable1.getValueAt(i, 4).toString());
+                huespedesObject.get().setFechaNacimiento(jTable1.getValueAt(i, 5).toString());
+                h.add(huespedesObject.get());
             }
             try {
                 boolean result = huespedes.saveListHuespedes(h);
@@ -490,6 +500,126 @@ public class FrameBusqueda extends javax.swing.JFrame {
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel9MouseClicked
+
+    private void setDataTableHuespedes(List<Huespedes> h) {
+        //set DATA to JTABLE
+        stopCellEditing();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);//clean data of old results
+        repaintTableHuespedes();
+        for (int i = 0; i < h.size(); i++) {
+            Object[] rowData = new Object[6];
+            rowData[0] = h.get(i).getIdhuespedes();
+            rowData[1] = h.get(i).getNombre();
+            rowData[2] = h.get(i).getApellido();
+            rowData[3] = h.get(i).getTelefono();
+            rowData[4] = h.get(i).getNacionalidad();
+            rowData[5] = h.get(i).getFechaNacimiento();
+            model.addRow(rowData);
+        }
+        jTable1.setModel(model);
+        jTable1.setVisible(true);
+    }
+
+    private void setDataTableReservas(Optional<Reservas> r) {
+        //set DATA to JTABLE
+        stopCellEditing();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        repaintTableReservas();
+        Object[] rowData = new Object[5];
+        rowData[0] = r.get().getId();
+        rowData[1] = r.get().getValor();
+        rowData[2] = r.get().getFechaEntrada();
+        rowData[3] = r.get().getFechaSalida();
+        rowData[4] = r.get().getFormaPago();
+        model.addRow(rowData);
+        jTable1.setModel(model);
+        jTable1.setVisible(true);
+    }
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void stopCellEditing() {
+        if (jTable1.getCellEditor() != null) {
+            try {
+                jTable1.getCellEditor().stopCellEditing();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "La información mostrada puede NO SER TOTALMENTE CORRECTA esto debido que se estaba editando una celda.");
+            }
+        }
+    }
+
+    private void repaintTableHuespedes() {
+        jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
+        jTable1.getColumnModel().getColumn(1).setHeaderValue("Nombre");
+        jTable1.getColumnModel().getColumn(2).setHeaderValue("Apellido");
+        jTable1.getColumnModel().getColumn(3).setHeaderValue("Telefono");
+        jTable1.getColumnModel().getColumn(4).setHeaderValue("Nacionalidad");
+        jTable1.getColumnModel().getColumn(5).setHeaderValue("Fecha Nacimiento");
+        jTable1.getTableHeader().resizeAndRepaint();
+    }
+
+    private void repaintTableReservas() {
+        jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
+        jTable1.getColumnModel().getColumn(1).setHeaderValue("Valor");
+        jTable1.getColumnModel().getColumn(2).setHeaderValue("Fecha Entrada");
+        jTable1.getColumnModel().getColumn(3).setHeaderValue("Fecha Salida");
+        jTable1.getColumnModel().getColumn(4).setHeaderValue("Forma Pago");
+        jTable1.getColumnModel().getColumn(5).setHeaderValue("");
+        jTable1.getTableHeader().resizeAndRepaint();
+    }
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        if (!typeSearch)
+            searchHuesped();
+    }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel11MouseClicked
+
+    private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel12MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        // delete button
+        String mensaje = "";
+        if (listIDSelected.isEmpty()) {
+            mensaje = "Para eliminar favor de buscar y seleccionar un registro.";
+        }
+
+        for (int i = 0; i < listIDSelected.size(); i++) {
+            if (jTable1.isRowSelected(i)) {
+                try {
+                    if (typeSearch) {
+                        Optional<Reservas> r = huespedes.huespedHasReservas(Long.parseLong(listIDSelected.get(i).toString()));
+                        if (r.isPresent()) {
+                            //true meaning that we could'nt delete that huesped because he has one or more reservations in hotel
+                            mensaje = "No puede eliminar este Huesped debido a que cuenta con la reservación "
+                                    + r.get().getId() + ". Por favor elimine su respectiva reservación y se eliminara el Huesped automaticamente.";
+                        } else {
+                            huespedes.deleteHuesped(Long.parseLong(listIDSelected.get(i).toString()));
+                            mensaje = "Huesped eliminado exitosamente.";
+                        }
+                        searchHuesped();
+                    } else {
+                        reservas.deleteReserva(Long.parseLong(listIDSelected.get(i).toString()));
+                        mensaje = "Reserva eliminada exitosamente.";
+                        searchReserva();
+                    }
+                } catch (Exception e) {
+                    mensaje = "Lo sentimos pero pudo haber ocurrido un error y posiblemente NO SE ELIMINARON todos los registros seleccionados.";
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(this, mensaje);
+    }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jPanel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel13MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
         // search
@@ -527,78 +657,6 @@ public class FrameBusqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel18MouseClicked
 
-    private void setDataTableHuespedes(List<Huespedes> h) {
-        //set DATA to JTABLE
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);//clean data of old results
-        for (int i = 0; i < h.size(); i++) {
-            Object[] rowData = new Object[6];
-            rowData[0] = h.get(i).getIdhuespedes();
-            rowData[1] = h.get(i).getNombre();
-            rowData[2] = h.get(i).getApellido();
-            rowData[3] = h.get(i).getTelefono();
-            rowData[4] = h.get(i).getNacionalidad();
-            rowData[5] = h.get(i).getFechaNacimiento();
-            model.addRow(rowData);
-        }
-        jTable1.setModel(model);
-        jTable1.setVisible(true);
-    }
-
-    private void setDataTableReservas(Optional<Reservas> r) {
-        //set DATA to JTABLE
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);//clean data of old results
-        Object[] rowData = new Object[5];
-        rowData[0] = r.get().getId();
-        rowData[1] = r.get().getValor();
-        rowData[2] = r.get().getFechaEntrada();
-        rowData[3] = r.get().getFechaSalida();
-        rowData[4] = r.get().getFormaPago();
-        model.addRow(rowData);
-        jTable1.setModel(model);
-        jTable1.setVisible(true);
-    }
-    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel10MouseClicked
-
-    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
-        if (!typeSearch)
-            searchHuesped();
-    }//GEN-LAST:event_jLabel19MouseClicked
-
-    private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel11MouseClicked
-
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-// delete button
-        String mensaje = "";
-        for (int i = 0; i < listIDSelected.size(); i++) {
-            if (jTable1.isRowSelected(i)) {
-                try {
-                    if (typeSearch) {
-                        huespedes.deleteHuesped(Long.parseLong(listIDSelected.get(i).toString()));
-                        mensaje = "Huesped eliminado exitosamente.";
-                        searchHuesped();
-                    } else {
-                        reservas.deleteReserva(Long.parseLong(listIDSelected.get(i).toString()));
-                        mensaje = "Reserva eliminada exitosamente.";
-                        searchReserva();
-                    }
-                } catch (Exception e) {
-                    mensaje = "Lo sentimos pero pudo haber ocurrido un error y posiblemente NO SE ELIMINARON todos los registros seleccionados.";
-                }
-            }
-        }
-        JOptionPane.showMessageDialog(this, mensaje);
-    }//GEN-LAST:event_jLabel20MouseClicked
-
-    private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel12MouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -608,12 +666,13 @@ public class FrameBusqueda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

@@ -29,6 +29,7 @@ public class FrameStart extends javax.swing.JFrame {
     @Autowired
     public FrameStart(ReservasService r, LoginService l, HuespedesService h) {
         initComponents();
+        setLocationRelativeTo(null);
         this.reservas = r;
         this.huespedes = h;
         this.lService = l;
